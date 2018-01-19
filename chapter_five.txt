@@ -1,0 +1,121 @@
+.. _第五章 SDK接入快速入门:
+
+第五章 SDK接入快速入门
+===============================
+
+5.1	创建项目
+------------
+
+新建项目时选择蓝图及C++项目均可，这里以蓝图Blank项目模板为例：
+
+.. image:: _static/5.1.png
+图5.1 创建项目
+
+请务必保证目标硬件为：Mobile/Tablet，目标图象级别为：Scalable 3D or 2D。另外项目名称及项目路径不要出现中文。
+
+
+5.2	设置项目
+-------------
+
+为兼容我们的SDK，需要对项目进行设置，主要包括以下几点：
+
+1、设置项目的Editor Start Map与Game Default Map。即保持当前地图，然后进入Edit->Project Setting->Project->Maps and Modes，设置为项目的Editor Start Map与Game Default Map为先前保持的地图：
+
+.. image:: _static/5.2.png
+图5.2 设置地图
+
+2、清除默认虚拟按键。进入Edit->Project Setting->Input->Mobile，清除Default Touch Interface：
+
+.. image:: _static/5.3.png
+图 5.3 清除游戏默认虚拟按键
+
+然后进入Edit->Project Setting->Platforms->Android->APKPackaging，勾选Enable FullScreen Immersive on KitKat and above devices：
+
+.. image:: _static/5.4.png
+图5.4 隐藏系统虚拟按键
+
+3、设置Android平台的SDK与NDK版本。进入Edit->Project Setting->Platforms->Android，将Minimum SDK Version与Target SDK Version均设为19：
+
+.. image:: _static/5.5.png
+图5.5 设置SDK版本
+
+然后进入Edit->Project Setting->Platforms->Android SDK，将SDK API Level设置为matchndk，NDK API Level设置为android-19：
+
+.. image:: _static/5.6.png
+图5.6 设置NDK版本
+
+4、设置支持的CPU类型与图形接口类型。进入Edit->Project Setting->Platforms->Android->Build，确保Suppot armv7与Support OpenGL ES2被勾选：
+
+.. image:: _static/5.7.png
+图5.7 设置支持的CPU类型与图形接口类型
+
+5、关闭与SDK相冲突的Plugins。进入：Edit->Plugins，取消勾选Built-in / Virtual Reality下的所有项，以及Built-in /Input Devices下的所有项。此时编辑器会提示重启，我们直接关闭编辑器即可。
+
+5.3	导入SDK开发包
+------------------
+
+1、保持编辑器关闭，将解压出的对应版本的SDK所在的Plugins文件夹复制到项目根目录下：
+
+.. image:: _static/5.8.png
+图5.8 将SDK导入目录
+
+2、打开项目编辑器，确保 Installed/ Virtual Reality / PicoMobile项与Installed/ Input Device / PicoMobileController项被勾选。如若未勾选，需要勾选之并重启编辑器。
+
+.. image:: _static/5.9.png
+图5.9 PicoMobile Plugin
+
+.. image:: _static/5.10.png
+图5.10 PicoMobileController Plugin
+
+5.4	完成项目
+------------------
+
+1、新建Pawn蓝图类，为其DefaultSceneRoot组件下添加Scene组件，然后在Scene组件下新建Camera组件与MotionController组件：
+
+.. image:: _static/5.11.png
+图5.11 Pawn组件结构
+
+我们的SDK实现了Camera组件的头部3DoF跟踪，双目立体渲染，光学畸变校正等功能，并实现了MotionController组件的3DoF跟踪，开发者直接使用引擎提供的Camera组件及MotionController组件即可。
+
+另外，对于Motion Controler组件，需勾选Disable Low Latency Update，以避免每一帧二次刷新造成的模型闪烁：
+
+.. image:: _static/5.12.png
+图5.12 勾选Disable Low Latency Update
+
+2、给MotionController组件添加静态网格组件：
+
+.. image:: _static/5.13.png
+图5.13 给Motion Controller添加Static Mesh组件
+
+将静态网格组件的Static Mesh属性设置为“ppcontroller”（添加时View Options需勾选Show Plugin Contents）：
+
+.. image:: _static/5.14.png
+图5.14 设置Static Mesh属性为ppcontroller
+
+3、将Pawn拖入场景，并将其Auto Prossess Palyer设为Player0：
+
+.. image:: _static/5.15.png
+图5.15 将Pawn拖入场景
+
+**注：** 在内容浏览器中，插件内容的PicoMobileController Content目录下，含PicoControllerPawn，该Pawn含Camera组件及MotionControler组件，其含运动控制器动画，开发者若不想构建自己的Pawn，可直接使用之：
+
+.. image:: _static/5.16.png
+图5.16 PicoControllerPawn
+
+5.5	项目打包
+------------------
+
+Pico Neo以及Pico Goblin支持的纹理压缩格式为ASTC，所以在打包项目时需选择Android（ASTC）。具体打包流程为：在编辑器中，执行文件->打包项目->Android-> Android（ASTC），即可打包：
+
+.. image:: _static/5.17.png
+图5.17 打包流程
+
+打包后，双击“Install_项目名称_编译配置-armv7-es2.bat进行安装”：
+
+.. image:: _static/5.18.png
+图5.18 安装apk
+
+安装后运行即可看到如下场景：
+
+.. image:: _static/5.19.png
+图5.19 运行游戏

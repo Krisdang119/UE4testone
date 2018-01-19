@@ -1,0 +1,86 @@
+﻿.. _第十一章 FAQ:
+
+第十一章 FAQ
+===============================
+
+**问:** 为什么demo中点击设置亮度的按钮时，设置值比输入值大50？
+
+**答:** 这里我们为防止意外将系统的亮度设置为0，特将输入值加了50来设置最终的亮度，即如下：
+
+.. image:: _static/11.1.png
+
+图11.1 设置系统亮度
+
+**问:** 为何项目打包后会出现Android系统的虚拟按钮？
+
+**答:** 勾选：项目设置→平台→Android→APKPackaging→Enable FullScreent Immersive on KitKat and above devices：
+
+.. image:: _static/11.2.png
+
+图11.2 勾选Enable FullScreent Immersive on KitKat and above devices
+
+**问:** 如何提高游戏的帧率？
+
+**答:** 提高游戏帧率可从以下两方面入手：
+
+**1、关闭环境光遮蔽**。现阶段VR项目对全局光照的要求不是太高，可关闭环境光遮蔽，做法是打开项目设置，进入引擎/Rendering/Default Setting，取消勾选Ambient Occlusion与Ambient Occlusion Static Fraction：
+
+.. image:: _static/11.3.png
+
+图11.3 取消使用环境光遮蔽
+
+**2、关闭Mobile HDR**。做法是打开项目设置，进入引擎/Rendering/Mobile，取消勾选Mobile HDR：
+
+.. image:: _static/11.4.png
+
+图11.4 取消勾选Mobile HDR
+
+**问:** 如何减小游戏包的大小？
+
+**答:** 减小游戏包的大小可从3个方面入手：
+
+1、在项目设置/项目/打包中勾选Create compressed cooked packages，压缩烘焙过的内容；
+
+2、取消勾选未使用的Plugins；
+
+3、删除内容浏览器中没有用到的资源。
+
+.. image:: _static/11.5.png
+
+图11.5压缩烘焙过的内容
+
+**问:** 如何优化显示效果？
+
+**答:** 建议使用5.15.3及以上版本，做法是打开项目设置，进入引擎/Rendering/Mobile，调整Mobile MSAA，可有效减少锯齿，提升显示效果。倍数越高优化效果越好，但是会增加性能消耗，影响帧率。
+
+.. image:: _static/11.6.png
+
+图11.6 修改Mobile MSAA
+
+**问:** 系统显示虚拟按键，怎么规避？
+
+**答:** 通过UE设置全屏模式，如下图。
+
+.. image:: _static/11.7.png
+
+图11.7 设置全屏模式
+
+**问:** 项目命名或路径中文，为什么使用PicoVRSDK plugin出现打包失败？
+
+**答:** UE不支持中文，请不要使用中文和中文目录。
+
+**问:** 项目命名为test，为什么使用PicoVRSDK plugin出现打包失败？
+
+**答:** test在UE中是命令关键字见下图，建议项目命名避开UE命令关键字。
+
+.. image:: _static/11.8.png
+
+图11.8 UE命令关键字
+
+**问:** 为什么游戏中Goblin手柄会时而闪烁一下？
+
+**答:**  因为UE4游戏逻辑与渲染不在同一线程，Epic为平滑运动控制器的移动，默认会在渲染之前再更新一次运动控制器的位置和姿态，但这种做法也产生了模型时而闪烁一下的bug。要想规避这种闪烁，只需选中Motion Controller组件，在其细节面板中勾选Disable Low Latency Update：
+
+.. image:: _static/11.9.png
+
+图11.9 Disable Low Latency Update

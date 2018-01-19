@@ -1,0 +1,13 @@
+.. _第四章 SDK文件结构:
+
+第四章 SDK文件结构
+===============================
+
+将SDK压缩包解压后，进入相应Unreal Engine版本的文件夹，再进入Plugins文件夹，即可看到PicoMoblie以及PicoMobileController两个Plugin（图4.1）。
+
+.. image:: _static/4.1.png
+图4.1 SDK文件结构
+
+- **PicoMobile:** 提供头部姿态跟踪、双目立体渲染、光学畸变校正、异步时间扭曲、单缓冲渲染、账号及支付管理等功能。
+
+- **PicoMobileController:** 为Pico Goblin手柄提供位置、姿态跟踪及按键事件相应等功能。
