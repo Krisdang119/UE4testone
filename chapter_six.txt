@@ -1,0 +1,177 @@
+.. _第六章 接口函数:
+
+第六章 接口函数
+===============================
+
+SDK的接口以蓝图节点的形式提供，在事件图表中单机鼠标右键，在“Pico Mobile”及“Pico Payment”分类下即可找到这些节点（图6.1）。
+
+.. image:: _static/6.1.png
+图6.1调用接口函数
+
+6.1	共有接口
+-------------
+
+6.1.1	PicoGetCurrentOrientation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.1.1.png
+
+- 函数功能：获取头戴的当前姿态
+- 返回值：头戴的当前姿态（Quat）
+
+6.1.2	PicoGetCurrentPosition
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.1.2.png
+
+- 函数功能：获取头戴的当前位置（预留接口，目前设备仅支持3DoF跟踪）
+- 返回值：头戴的当前位置（Vector）
+
+6.1.3	PicoGetSensorCount
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.1.3.png
+
+- 函数功能：获取当前所使用传感器的数量
+- 输出参数Count：当前所用传感器的数量（integer）
+- 返回值：是否成功获取（boolean），true代表成功获取，false代表获取失败
+
+6.1.4	PicoGetFov
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.1.4.png
+
+- 函数功能：获取FOV
+- 返回值：FOV（float）
+
+6.1.5	PicoGetCurrentBrightness
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.1.5.png
+
+- 函数功能：获取当前系统的亮度
+- 返回值：当前系统的亮度（integer，0~255）
+
+6.1.6	PicoSetBrightness
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.1.6.png
+
+- 函数功能：设置系统的亮度
+- 输出参数Brightness：设置的目标亮度（integer，0~255）
+- 返回值：是否成功设置系统的亮度（boolean），true表示设置成功，false表示设置失败
+
+6.1.7	PicoVolumeUp
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.1.7.png
+
+- 函数功能：增大系统音量（系统音量范围为0~15，调用一次增加1）
+
+6.1.8	PicoVolumeDown
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.1.8.png
+
+- 函数功能：减小系统音量（系统音量范围为0~15，调用一次减少1）
+
+6.1.9	PicoGetCurrentVolume
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.1.9.png
+
+- 函数功能：获取当前的系统音量
+- 返回值：当前的系统音量（integer）
+
+6.1.10	PicoSetVolume
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.1.10.png
+
+- 函数功能：设置系统音量
+- 输入参数Volume：想要设置的系统音量（integer，0~15）
+- 返回值：当前的系统音量（integer）
+
+6.1.11	PicoGetMaxVolumeNumber
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.1.11.png
+
+- 函数功能：获取最大音量
+- 返回值：表示最大音量的数
+
+6.2	Pico Neo专有接口
+---------------------
+
+6.2.1	PicoIsHmdWeared
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.2.1.png
+
+- 函数功能：判断头戴是否靠近眼睛
+- 返回值：是否靠近眼睛（boolean），true代表靠近眼睛，false代表远离眼睛
+
+6.2.2	PicoNeoStartControllerSensor
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.2.2.png
+
+- 函数功能：开启手柄的Sensor
+- 返回值：是否成功开启（boolean），true表示成功开启，false表示开启失败
+
+6.2.3	PicoNeoStopControllerSensor
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.2.3.png
+
+- 函数功能：关闭手柄的Sensor
+- 返回值：是否成功关闭（boolean），true表示成功关闭，false表示关闭失败
+
+6.2.4	PicoNeoResetControllerSensor
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.2.4.png
+
+- 函数功能：重置手柄的Sensor
+- 返回值：是否成功重置（boolean），true表示成功重置，false表示重置失败
+
+6.2.5	PicoNeoGetControllerOrientationAndPosition
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.2.5.png
+
+- 函数功能：获取手柄的当前姿态和位置
+- 输出参数Orientation：手柄的当前姿态（Quat）
+- 输出参数Position：手柄的当前位置（Vector），注：此参数为6dof预留参数，目前为（0，0，0），SDK加入6dof支持后将输出正确的位置。
+- 返回值：是否成功获取（boolean），true表示获取成功，false表示获取失败
+
+6.3	Pico Goblin专有接口
+-----------------------
+
+6.3.1	GetPicoControllerOrientationAndPosition
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.3.1.png
+
+- 函数功能：获取手柄的当前姿态和位置
+- 输入参数Controller Index：player controller的索引
+- 输入参数DeviceHand：左手还是右手
+- 输出参数OutOrientation：手柄的当前姿态（Quat）
+- 输出参数OutPosition：手柄的当前位置（Vector）
+
+6.3.2	PicoSetControllerConnectedStatusChangedDelegate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.3.2.png
+
+- 函数功能：设置手柄连接断开及重连后您想进行的操作。（手柄连接一般不会断开，但当电池没电等无法规避的问题出现时手柄连接会断开，若及时采取措施手柄会自动重连，这里我们提供两个委托，您可以设置一个自定义事件并添加相应的操作）
+- 输入参数On Pico Controller Connected：当手柄重连时执行的委托
+- 输入参数On Pico Controller Disconnected：当手柄连接意外断开时执行的委托
+
+6.3.3	PicoChooseControllerHand
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.3.3.png
+
+- 函数功能：选择运动控制器的左右手（当前3dof运动控制器仅为一个，使用该函数可设置控制器为哪只手所用）
+- 输入参数:Left——左手，Right——右手
+
+6.3.4	PicoSwitchControllerHand
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.3.4.png
+
+- 函数功能：切换运动控制器的当前适用手
+
+6.3.5	PicoChooseArmModelJoint
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.3.5.png
+
+- 函数功能：选择运动控制器的当前跟踪关节
+- 输入参数:Wrist——手腕，Elbow——手肘，Shoulder——肩膀
+
+6.3.6	PicoSwitchArmModelJoint
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. image:: _static/6.3.6.png
+
+- 函数功能：循环切换当前运动控制器的跟踪关节，依次为手腕——手肘——肩膀

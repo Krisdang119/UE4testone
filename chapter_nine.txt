@@ -1,0 +1,56 @@
+﻿.. _第九章 Demo介绍:
+
+第九章 Demo介绍
+===============================
+
+9.1	项目说明
+------------------------------------
+
+为演示接口函数的用法，我们特意提供了Demo工程。
+
+Demo为UE4.14.3版本的项目，在使用前 **需首先按照第5章中的方法将4.14版本的SDK放入demo工程目录，并启用对应的Plugin** 。如需使用其他版本的游戏引擎打开，需首先将切换demo工程的引擎版本，再按照第5章中的方法导入对应版本的SDK。
+
+另外，如使用支付系统，需要进入Plugins\PicoMobile\Source\PicoMobile目录，打开PicoMobileHMD_APL.xml文件，填入您的ID、APPID、APP KEY、APP secret。
+
+打开后可以看到项目中共有三个关卡：
+
+.. image:: _static/9.1.png
+
+图9.1 Demo中的关卡
+
+其中，MainLevel为Editor Startup Map及Game Default Map，打开这个关卡可以看到一个3D控件：
+
+.. image:: _static/9.2.png
+
+图9.2 MainLevel中的3D控件
+
+在“游戏模式”下，点击控件的“Pico Goblin”按钮，即可进入演示Pico Goblin接口函数的关卡；点击“Pico Neo”，即可进入演示Pico Neo接口函数的关卡。
+
+9.2	蓝图接口用法演示
+------------------------------------
+
+这里以Level1，即演示Pico Goblin接口函数的关卡为例，进行详细说明。
+
+打开Level1关卡，可以看到有一个3D控件和一个虚拟键盘：
+
+.. image:: _static/9.3.png
+
+图9.3 Level1关卡
+
+3D控件对应的控件蓝图类为“Level1MainUI”，我们在其中为个按键加入了相应函数。在游戏模式下，点击按键，即可调用相应的接口函数，然后把调用结构输出到按键右侧的空白区域。
+
+对于PicoSetBrightness以及PicoSetVolume，均会从虚拟键盘上读取数值，而且为防止将亮度设置为0，PicoSetBrightness读取数值时会将读取到的数值加50，以相加后的值设置当前的系统亮度。
+
+对于支付系统，我们首先在Level1的关卡蓝图中对回调代理事件，获取回调函数输出的参数，然后将其打印到3D控件上面：
+
+.. image:: _static/9.4.png
+
+图9.4 设置回调代理事件
+
+如测试支付系统，需将相关字符串填入“Level1MainUI”图表中相关相应函数的参数中：
+
+.. image:: _static/9.5.png
+
+图9.5 给支付的相应函数填入参数
+
+最后，对于打包demo项目，为显示交互所用的射线，打包时编译配置选择“开发”。对于Pico Neo，可按下控制器上的“A键”实现点击3D控件的功能；而对于Pico Goblin，可按下手柄上的触摸板实现点击3D控件的功能。
